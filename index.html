@@ -43,6 +43,11 @@
 </body>
 <script type="text/javascript">
     window.onload = function() {
+        var last = localStorage.getItem('last')
+        if (last) {
+            document.getElementById('content').innerHTML = '上次菜单：' + JSON.parse(last).join('，')
+        }
+
         document.getElementById('btn').onclick = function() {
             // 特殊数组  // 正常数组  // 水果
             var specialList = ['啤酒小龙虾', '白灼海虾', '白灼基围虾', '柠檬鸡爪', '排骨汤', '鸡汤', '鸭汤', '可乐鸡翅', '蒜苔炒肉片']
@@ -96,7 +101,9 @@
                 }
             }
 
-            document.getElementById('content').innerHTML = ary.join('，')
+            localStorage.setItem('last', JSON.stringify(ary))
+
+            document.getElementById('content').innerHTML = '本次菜单：' + ary.join('，')
         }
     }
 </script>
