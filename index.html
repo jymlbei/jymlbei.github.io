@@ -24,7 +24,18 @@
 <body>
     <div>
         <p>要几个菜呀，dear~</p>
-        <input type="text" id='input' placeholder="默认2个"/>
+        <p>
+            肉菜：<input type="text" id='input' placeholder="默认1类"/>
+        </p>
+        <p>
+            蔬菜：<input type="text" id='input2' placeholder="默认1类"/>
+        </p>
+        <p>
+            大菜：<input type="text" id='input3' placeholder="默认0类"/>
+        </p>
+        <p>
+            水果：<input type="text" id='input4' placeholder="默认0类"/>
+        </p>
     </div>
     <p>今日生成菜谱如下：</p>
     <div id='content'></div>
@@ -33,42 +44,59 @@
 <script type="text/javascript">
     window.onload = function() {
         document.getElementById('btn').onclick = function() {
-            // 特殊数组  // 正常数组  // 待补充
+            // 特殊数组  // 正常数组  // 水果
             var specialList = ['啤酒小龙虾', '白灼海虾', '白灼基围虾', '柠檬鸡爪', '排骨汤', '鸡汤', '鸭汤', '可乐鸡翅', '蒜苔炒肉片']
             var normalList = ['胡萝卜炒肉', '土豆', '丝瓜炒蛋', '西红柿煮面', '青椒炒肉', '煮玉米', '炒饭', '炒面', '韭菜煎鸡蛋', '蛤蜊汤', '爆炒花甲', '花甲粉']
             var greenList = ['白菜', '菠菜', 'gong菜', '苦麻菜', '生菜', '芹菜', '豆芽']
-            var addList = ['苹果', '梨子', '桃子', '香蕉', '西瓜', '火龙果', '提子']
-
+            var fruitsList = ['苹果', '梨子', '桃子', '香蕉', '西瓜', '火龙果', '提子']
 
             function random(min, max) {
                 return Math.floor(Math.random() * (max - min)) + min;
             }
 
             var ary = []
+            var val1 = document.getElementById('input').value === '' ? 1 : document.getElementById('input').value
+            var val2 = document.getElementById('input2').value === '' ? 1 : document.getElementById('input2').value
+            var val3 = document.getElementById('input3').value === '' ? 0 : document.getElementById('input3').value
+            var val4 = document.getElementById('input4').value === '' ? 0 : document.getElementById('input4').value
 
-            var length = document.getElementById('input').value || 2
-            length = length > 5 ? 5 : length
-
-            getList()
-
-            // 生成数组
-            function getList() {
-                var temp = ''
-                if (ary.length === length - 1) {
-                    temp = specialList[random(0, specialList.length - 1)]
-                } else {
-                    temp = normalList[random(0, normalList.length - 1)]
-                }
+            for (let i = 0; i < val1; i++) {
+                let temp = normalList[random(0, normalList.length - 1)]
                 if (!ary.includes(temp)) {
                     ary.push(temp)
-                }
-                if (ary.length < length) {
-                    getList()
                 } else {
-                    console.log(ary)
-                    document.getElementById('content').innerHTML = document.getElementById('input').value - 0 > 5 ? '5个菜就够啦，吃辣么多，月半月半。。。。 ，就这些了-----' + ary.join('，') : ary.join('，')
+                    --i
                 }
             }
+
+            for (let i = 0; i < val2; i++) {
+                let temp = greenList[random(0, greenList.length - 1)]
+                if (!ary.includes(temp)) {
+                    ary.push(temp)
+                } else {
+                    --i
+                }
+            }
+
+            for (let i = 0; i < val3; i++) {
+                let temp = specialList[random(0, specialList.length - 1)]
+                if (!ary.includes(temp)) {
+                    ary.push(temp)
+                } else {
+                    --i
+                }
+            }
+
+            for (let i = 0; i < val4; i++) {
+                let temp = fruitsList[random(0, fruitsList.length - 1)]
+                if (!ary.includes(temp)) {
+                    ary.push(temp)
+                } else {
+                    --i
+                }
+            }
+
+            document.getElementById('content').innerHTML = ary.join('，')
         }
     }
 </script>
