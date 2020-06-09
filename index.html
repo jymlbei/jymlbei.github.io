@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>你的今日菜单</title>
+    <style>
+        #content {
+            margin: 10px 0;
+        }
+        #btn{
+            background-color: #1890ff;
+            color: white;
+            width: 50px;
+            border-radius: 20px;
+            text-align: center;
+            padding: 4px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <p>要几个菜呀，dear~</p>
+        <input type="text" id='input' placeholder="默认2个"/>
+    </div>
+    <p>今日生成菜谱如下：</p>
+    <div id='content'></div>
+    <div id='btn'>生成</div>
+</body>
+<script type="text/javascript">
+    window.onload = function() {
+        document.getElementById('btn').onclick = function() {
+            // 特殊数组  // 正常数组  // 待补充
+            var specialList = ['啤酒小龙虾', '白灼海虾', '白灼基围虾', '柠檬鸡爪', '排骨汤', '鸡汤', '鸭汤', '可乐鸡翅', '蒜苔炒肉片']
+            var normalList = ['胡萝卜炒肉', '土豆', '丝瓜炒蛋', '西红柿煮面', '青椒炒肉', '煮玉米', '炒饭', '炒面', '韭菜煎鸡蛋', '蛤蜊汤', '爆炒花甲', '花甲粉']
+            var greenList = ['白菜', '菠菜', 'gong菜', '苦麻菜', '生菜', '芹菜', '豆芽']
+            var addList = ['苹果', '梨子', '桃子', '香蕉', '西瓜', '火龙果', '提子']
+
+
+            function random(min, max) {
+                return Math.floor(Math.random() * (max - min)) + min;
+            }
+
+            var ary = []
+
+            var length = document.getElementById('input').value || 2
+            length = length > 5 ? 5 : length
+
+            getList()
+
+            // 生成数组
+            function getList() {
+                var temp = ''
+                if (ary.length === length - 1) {
+                    temp = specialList[random(0, specialList.length - 1)]
+                } else {
+                    temp = normalList[random(0, normalList.length - 1)]
+                }
+                if (!ary.includes(temp)) {
+                    ary.push(temp)
+                }
+                if (ary.length < length) {
+                    getList()
+                } else {
+                    console.log(ary)
+                    document.getElementById('content').innerHTML = document.getElementById('input').value - 0 > 5 ? '5个菜就够啦，吃辣么多，月半月半。。。。 ，就这些了-----' + ary.join('，') : ary.join('，')
+                }
+            }
+        }
+    }
+</script>
+
+</html>
